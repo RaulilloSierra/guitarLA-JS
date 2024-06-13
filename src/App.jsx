@@ -1,9 +1,18 @@
 import { Fragment, useState } from "react";
 import Header from "./components/Header";
 import Guitar from "./components/Guitar";
+import { db } from "./data/db.js";
 
 function App() {
-  const [auth, setAuth] = useState([]);
+  const [data, setData] = useState(db);
+  const [cart, setCart] = useState([]);
+
+  function addToCart(e) {
+    const guitarExist = cart.findIndex((guitar) => guitar.id === e.id);
+    console.log(guitarExist);
+    setCart([...cart, e]);
+  }
+
   return (
     <Fragment>
       <Header />
@@ -12,7 +21,11 @@ function App() {
         <h2 className="text-center">Nuestra Colección</h2>
 
         <div className="row mt-5">
-          <Guitar />
+          {data.map((guitar) => {
+            return (
+              <Guitar key={guitar.id} guitar={guitar} addToCart={addToCart} />
+            );
+          })}
         </div>
       </main>
 
