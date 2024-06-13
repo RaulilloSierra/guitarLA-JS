@@ -8,7 +8,8 @@ function App() {
   const [cart, setCart] = useState([]);
 
   function addToCart(e) {
-    
+    const guitarExist = cart.findIndex((guitar) => guitar.id === e.id);
+    console.log(guitarExist);
     setCart([...cart, e]);
   }
 
