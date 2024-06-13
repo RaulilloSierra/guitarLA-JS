@@ -1,10 +1,16 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import Header from "./components/Header";
 import Guitar from "./components/Guitar";
 import { db } from "./data/db.js";
 
 function App() {
   const [data, setData] = useState(db);
+  const [cart, setCart] = useState([]);
+
+  function addToCart(e) {
+    
+    setCart([...cart, e]);
+  }
 
   return (
     <Fragment>
@@ -15,7 +21,9 @@ function App() {
 
         <div className="row mt-5">
           {data.map((guitar) => {
-            return <Guitar key={guitar.id} guitar={guitar} />;
+            return (
+              <Guitar key={guitar.id} guitar={guitar} addToCart={addToCart} />
+            );
           })}
         </div>
       </main>
