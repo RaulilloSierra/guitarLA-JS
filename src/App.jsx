@@ -6,10 +6,23 @@ import db from "../data/db.js";
 function App() {
   // State
   const [data, setData] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     setData(db);
   }, []);
+
+  const addToCart = (obj) => {
+    const objExist = cart.findIndex((guitar) => guitar.id === obj.id);
+    if (objExist >= 0) {
+      const updatedCart = [...cart];
+      updatedCart[objExist].quantity++;
+      setCart(updatedCart);
+    } else {
+      obj.quantity = 1;
+      setCart([...cart, obj]);
+    }
+  };
 
   return (
     <Fragment>
@@ -19,7 +32,14 @@ function App() {
 
         <div className="row mt-5">
           {data.map((g) => {
-            return <Guitar key={g.id} guitar={g} />;
+            return (
+              <Guitar
+                key={g.id}
+                guitar={g}
+                setCart={setCart}
+                addToCart={addToCart}
+              />
+            );
           })}
         </div>
       </main>
