@@ -4,7 +4,7 @@ import Guitar from "./components/Guitar";
 import db from "../data/db.js";
 
 function App() {
-  // State
+
   const [data, setData] = useState([]);
   const [cart, setCart] = useState([]);
 
@@ -26,7 +26,7 @@ function App() {
 
   return (
     <Fragment>
-      <Header />
+      <Header cart={cart} />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
 
