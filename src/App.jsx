@@ -1,10 +1,15 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Header from "./components/Header";
 import Guitar from "./components/Guitar";
+import db from "../data/db.js";
 
 function App() {
   // State
-  const [auth, setauth] = useState({});
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setData(db);
+  }, []);
 
   return (
     <Fragment>
@@ -13,7 +18,9 @@ function App() {
         <h2 className="text-center">Nuestra Colección</h2>
 
         <div className="row mt-5">
-          <Guitar />
+          {data.map((g) => {
+            return <Guitar key={g.id} guitar={g} />;
+          })}
         </div>
       </main>
 
