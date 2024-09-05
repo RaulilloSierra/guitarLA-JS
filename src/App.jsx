@@ -4,9 +4,15 @@ import Guitar from "./components/Guitar";
 import db from "../data/db.js";
 
 function App() {
+  // Verificar si existe algo en localStorage
+  const initialCart = () => {
+    const localStorageCart = localStorage.getItem("cart");
+    return localStorageCart ? JSON.parse(localStorageCart) : [];
+  };
+
   //Estados locales
   const [data, setData] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(initialCart);
 
   // cargar datos
   useEffect(() => {
@@ -16,6 +22,11 @@ function App() {
   // Items mínimos y máximos en el carrito de compras
   const maxItems = 3;
   const minItems = 1;
+
+  // Almacenar en LocalStorage
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   // Agregar al carrito
   const addToCart = (obj) => {
