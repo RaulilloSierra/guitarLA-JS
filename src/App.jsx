@@ -4,14 +4,16 @@ import Guitar from "./components/Guitar";
 import db from "../data/db.js";
 
 function App() {
-
+  //Estados locales
   const [data, setData] = useState([]);
   const [cart, setCart] = useState([]);
 
+  // cargar datos
   useEffect(() => {
     setData(db);
   }, []);
 
+  // Agregar al carrito
   const addToCart = (obj) => {
     const objExist = cart.findIndex((guitar) => guitar.id === obj.id);
     if (objExist >= 0) {
@@ -24,9 +26,32 @@ function App() {
     }
   };
 
+  // Eliminar del carrito
+  const deleteFromCart = (id) => {
+    setCart((prevCart) => prevCart.filter((guitar) => guitar.id !== id));
+  };
+
+  // Incrementar cantidades
+  const increaseQuantity = (id) => {
+    const increaseQ = cart.map((item) => {
+      if (item.id === id && item.quantity < 10) {
+        return {
+          ...item,
+          quantity: item.quantity + 1,
+        };
+      }
+      return item;
+    });
+    setCart(increaseQ);
+  };
+
   return (
     <Fragment>
-      <Header cart={cart} />
+      <Header
+        cart={cart}
+        deleteFromCart={deleteFromCart}
+        increaseQuantity={increaseQuantity}
+      />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
 

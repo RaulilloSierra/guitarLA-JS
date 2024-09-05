@@ -1,10 +1,12 @@
-import { Fragment } from "react";
+import { Fragment, useMemo } from "react";
 
-export default function Header({ cart }) {
+export default function Header({ cart, deleteFromCart, increaseQuantity }) {
   // State derivado
-  const isEmpty = () => cart.length === 0;
-  const cartTotal = () =>
-    cart.reduce((total, item) => total + item.quantity * item.price, 0);
+  const isEmpty = useMemo(() => cart.length === 0, [cart]);
+  const cartTotal = useMemo(
+    () => cart.reduce((total, item) => total + item.quantity * item.price, 0),
+    [cart]
+  );
 
   //
 
@@ -31,7 +33,7 @@ export default function Header({ cart }) {
                 />
 
                 <div id="carrito" className="bg-white p-3">
-                  {isEmpty() ? (
+                  {isEmpty ? (
                     <p className="text-center">El carrito esta vacio</p>
                   ) : (
                     <Fragment>
@@ -69,6 +71,7 @@ export default function Header({ cart }) {
                                   <button
                                     type="button"
                                     className="btn btn-dark"
+                                    onClick={()=>increaseQuantity(guitar.id)}
                                   >
                                     +
                                   </button>
@@ -77,6 +80,7 @@ export default function Header({ cart }) {
                                   <button
                                     className="btn btn-danger"
                                     type="button"
+                                    onClick={() => deleteFromCart(guitar.id)}
                                   >
                                     X
                                   </button>
@@ -88,7 +92,7 @@ export default function Header({ cart }) {
                       </table>
                       <p className="text-end">
                         Total pagar:{" "}
-                        <span className="fw-bold">${cartTotal()}</span>
+                        <span className="fw-bold">${cartTotal}</span>
                       </p>
                     </Fragment>
                   )}
