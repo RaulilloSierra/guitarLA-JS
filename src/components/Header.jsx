@@ -1,6 +1,12 @@
 import { Fragment, useMemo } from "react";
 
-export default function Header({ cart, deleteFromCart, increaseQuantity }) {
+export default function Header({
+  cart,
+  deleteFromCart,
+  increaseQuantity,
+  reduceQuantity,
+  clearCart,
+}) {
   // State derivado
   const isEmpty = useMemo(() => cart.length === 0, [cart]);
   const cartTotal = useMemo(
@@ -19,7 +25,7 @@ export default function Header({ cart, deleteFromCart, increaseQuantity }) {
               <a href="index.html">
                 <img
                   className="img-fluid"
-                  src="./public/img/logo.svg"
+                  src="/img/logo.svg"
                   alt="imagen logo"
                 />
               </a>
@@ -28,7 +34,7 @@ export default function Header({ cart, deleteFromCart, increaseQuantity }) {
               <div className="carrito">
                 <img
                   className="img-fluid"
-                  src="./public/img/carrito.png"
+                  src="/img/carrito.png"
                   alt="imagen carrito"
                 />
 
@@ -54,7 +60,7 @@ export default function Header({ cart, deleteFromCart, increaseQuantity }) {
                                 <td>
                                   <img
                                     className="img-fluid"
-                                    src={`./public/img/${guitar.image}.jpg`}
+                                    src={`/img/${guitar.image}.jpg`}
                                     alt="imagen guitarra"
                                   />
                                 </td>
@@ -64,6 +70,7 @@ export default function Header({ cart, deleteFromCart, increaseQuantity }) {
                                   <button
                                     type="button"
                                     className="btn btn-dark"
+                                    onClick={() => reduceQuantity(guitar.id)}
                                   >
                                     -
                                   </button>
@@ -71,7 +78,7 @@ export default function Header({ cart, deleteFromCart, increaseQuantity }) {
                                   <button
                                     type="button"
                                     className="btn btn-dark"
-                                    onClick={()=>increaseQuantity(guitar.id)}
+                                    onClick={() => increaseQuantity(guitar.id)}
                                   >
                                     +
                                   </button>
@@ -97,7 +104,10 @@ export default function Header({ cart, deleteFromCart, increaseQuantity }) {
                     </Fragment>
                   )}
 
-                  <button className="btn btn-dark w-100 mt-3 p-2">
+                  <button
+                    className="btn btn-dark w-100 mt-3 p-2"
+                    onClick={clearCart}
+                  >
                     Vaciar Carrito
                   </button>
                 </div>
