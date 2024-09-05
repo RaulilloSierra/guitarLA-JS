@@ -13,10 +13,15 @@ function App() {
     setData(db);
   }, []);
 
+  // Items mínimos y máximos en el carrito de compras
+  const maxItems = 3;
+  const minItems = 1;
+
   // Agregar al carrito
   const addToCart = (obj) => {
     const objExist = cart.findIndex((guitar) => guitar.id === obj.id);
     if (objExist >= 0) {
+      if (cart[objExist].quantity >= maxItems) return;
       const updatedCart = [...cart];
       updatedCart[objExist].quantity++;
       setCart(updatedCart);
@@ -34,7 +39,7 @@ function App() {
   // Incrementar cantidades
   const increaseQuantity = (id) => {
     const increaseQ = cart.map((item) => {
-      if (item.id === id && item.quantity < 10) {
+      if (item.id === id && item.quantity < maxItems) {
         return {
           ...item,
           quantity: item.quantity + 1,
@@ -45,12 +50,33 @@ function App() {
     setCart(increaseQ);
   };
 
+  // Reducir cantidades
+  const reduceQuantity = (id) => {
+    const reduceQ = cart.map((item) => {
+      if (item.id === id && item.quantity > minItems) {
+        return {
+          ...item,
+          quantity: item.quantity - 1,
+        };
+      }
+      return item;
+    });
+    setCart(reduceQ);
+  };
+
+  // Limpiar el carrito de compras
+  const clearCart = () => {
+    setCart([]);
+  };
+
   return (
     <Fragment>
       <Header
         cart={cart}
         deleteFromCart={deleteFromCart}
         increaseQuantity={increaseQuantity}
+        reduceQuantity={reduceQuantity}
+        clearCart={clearCart}
       />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
