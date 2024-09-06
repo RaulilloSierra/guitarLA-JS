@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from "react";
+import { Fragment } from "react";
 
 export default function Header({
   cart,
@@ -6,16 +6,9 @@ export default function Header({
   increaseQuantity,
   reduceQuantity,
   clearCart,
+  isEmpty,
+  cartTotal,
 }) {
-  // State derivado
-  const isEmpty = useMemo(() => cart.length === 0, [cart]);
-  const cartTotal = useMemo(
-    () => cart.reduce((total, item) => total + item.quantity * item.price, 0),
-    [cart]
-  );
-
-  //
-
   return (
     <Fragment>
       <header className="py-5 header">
