@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import Header from "./components/Header";
 import Guitar from "./components/Guitar";
-import db from "../data/db.js";
+import db from "./data/db.js";
 
 function App() {
   // Verificar si existe algo en localStorage
