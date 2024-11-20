@@ -91,8 +91,7 @@ export default function Header({
                         </tbody>
                       </table>
                       <p className="text-end">
-                        Total pagar:{" "}
-                        <span className="fw-bold">${cartTotal}</span>
+                        Total pagar: <span className="fw-bold">${cartTotal}</span>
                       </p>
                     </Fragment>
                   )}
